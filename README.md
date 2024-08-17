@@ -90,14 +90,6 @@ Sabendo disso a comunidade da {Reprograma} decidiu desenvolver o sistema de gest
 | - alunos: Aluno[]    |
 +----------------------+
 ```
-Exercício 1: Refinamento para entendimento dos requisitos, regras de negócio e casos de uso
-
-Exercício 2: Implementação das classes do nosso domínio
-
-Exercício 3: Definição das rotas que serão expostas pela nossa API
-
-Exercício 4: Codemos!!!
-
 ***
 ### Exercícios 
 * [Exercicio para sala](/exercicios/para-sala/)
