@@ -15,10 +15,17 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('deve retornar uma mensagem de health check quando a rota / for requisitada', () => {
     return request(app.getHttpServer())
       .get('/')
       .expect(200)
       .expect('Hello World!');
+  });
+
+  it('deve retornar uma mensagem quando a rota /alunos for requisitada', () => {
+    return request(app.getHttpServer())
+      .post('/alunos')
+      .expect(201)
+      .expect('Não sei cadastrar um aluno, eu sou só um controller...');
   });
 });
