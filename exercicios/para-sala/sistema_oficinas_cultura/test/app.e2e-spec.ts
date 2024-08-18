@@ -26,6 +26,8 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .post('/alunos')
       .expect(201)
-      .expect('Não sei cadastrar um aluno, eu sou só um controller...');
+      .expect(
+        'Eu sou capaz de criar um aluno, mas não sei como salvar essa informação...',
+      );
   });
 });
