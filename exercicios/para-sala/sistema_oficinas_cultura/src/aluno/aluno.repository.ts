@@ -17,4 +17,8 @@ export class AlunoRepository {
   listar(): Aluno[] {
     return this.alunos;
   }
+
+  buscarPorEmail(email: string): Aluno {
+    return this.alunos.find((aluno) => aluno.email === email);
+  }
 }

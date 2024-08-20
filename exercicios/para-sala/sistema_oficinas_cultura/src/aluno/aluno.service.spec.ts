@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AlunoService } from './aluno.service';
 import { CreateAlunoDto } from './dto/create-aluno.dto';
-import { ForbiddenException } from '@nestjs/common';
+import { ConflictException, ForbiddenException } from '@nestjs/common';
 import { Aluno } from './entities/aluno.entity';
 import { AlunoRepository } from './aluno.repository';
 
@@ -53,5 +53,10 @@ describe('AlunoService', () => {
     const alunoCriado = service.cadastrar(alunoTest);
     expect(alunoCriado).toBeInstanceOf(Aluno);
     expect(alunoCriado).not.toHaveProperty('anoNascimento');
+  });
+
+  it('não deve cadastrar dois alunos com o mesmo email', () => {
+    service.cadastrar(alunoTest);
+    expect(() => service.cadastrar(alunoTest)).toThrow(ConflictException);
   });
 });

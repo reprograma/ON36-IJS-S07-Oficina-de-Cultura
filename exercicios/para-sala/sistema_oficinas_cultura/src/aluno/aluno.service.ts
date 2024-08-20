@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { CreateAlunoDto } from './dto/create-aluno.dto';
 import { AlunoRepository } from './aluno.repository';
 import { Aluno } from './entities/aluno.entity';
@@ -16,10 +20,15 @@ export class AlunoService {
       throw new ForbiddenException('A idade mínima para cadastro é 16 anos.');
     }
 
-    // TODO: Implentar um teste unitário para verificar essa regra
-
-    // TO DO: Implementar a regra de negácio:
     // Não pode haver duplicação de registros de alunos, cursos e professores - identificador único;
+    const alunoExistente = this.alunoRepository.buscarPorEmail(
+      createAlunoDto.email,
+    );
+    if (alunoExistente) {
+      throw new ConflictException(
+        'Já existe um aluno cadastrado com esse email.',
+      );
+    }
 
     const novoAluno = new Aluno(
       createAlunoDto.nome,
@@ -31,6 +40,8 @@ export class AlunoService {
     const alunoCadastrado = this.alunoRepository.criar(novoAluno);
     return alunoCadastrado;
   }
-}
 
-// Eu não devo persistir informação de data de nascimento no meu sistema;
+  listar() {
+    return this.alunoRepository.listar();
+  }
+}
