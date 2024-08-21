@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AlunoService } from './aluno.service';
 import { CreateAlunoCommand } from './commands/create-aluno-command';
 import { ConflictException, ForbiddenException } from '@nestjs/common';
-import { Aluno } from '../entities/aluno.entity';
-import { AlunoRepository } from '../aluno.repository';
+import { Aluno } from '../domain/aluno';
+import { AlunoFactory } from '../domain/factories/aluno-factory';
 
 describe('AlunoService', () => {
   let service: AlunoService;
@@ -17,7 +17,7 @@ describe('AlunoService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AlunoService, AlunoRepository],
+      providers: [AlunoService, AlunoFactory],
     }).compile();
 
     service = module.get<AlunoService>(AlunoService);

@@ -5,39 +5,48 @@ import {
 } from '@nestjs/common';
 import { CreateAlunoCommand } from './commands/create-aluno-command';
 import { AlunoRepository } from '../aluno.repository';
-import { Aluno } from '../entities/aluno.entity';
+import { AlunoFactory } from '../domain/factories/aluno-factory';
 
 @Injectable()
 export class AlunoService {
-  constructor(private readonly alunoRepository: AlunoRepository) {}
-  cadastrar(createAlunoDto: CreateAlunoCommand) {
-    // Pessoas a partir de 16 anos (professores e estudantes);
-    const anoAtual = new Date().getFullYear();
-    const idade = anoAtual - createAlunoDto.anoNascimento;
-    const IDADE_MIN_CADASTRO = 16;
-    if (idade <= IDADE_MIN_CADASTRO) {
-      throw new ForbiddenException('A idade mínima para cadastro é 16 anos.');
-    }
+  constructor(
+    private readonly alunoRepository: AlunoRepository,
+    private readonly alunoFactory: AlunoFactory,
+  ) {}
 
-    // Não pode haver duplicação de registros de alunos, cursos e professores - identificador único;
+  cadastrar(createAlunoCommand: CreateAlunoCommand) {
+    this.validarIdadeMinima(createAlunoCommand);
+    this.validarSeJaExiste(createAlunoCommand);
+
+    const novoAluno = this.alunoFactory.criar(
+      createAlunoCommand.nome,
+      createAlunoCommand.endereco,
+      createAlunoCommand.email,
+      createAlunoCommand.telefone,
+    );
+
+    // const alunoCadastrado = this.alunoRepository.criar(novoAluno); // Vamos implementar essa camada mais adiante
+    return novoAluno;
+  }
+
+  private validarSeJaExiste(createAlunoCommand: CreateAlunoCommand) {
     const alunoExistente = this.alunoRepository.buscarPorEmail(
-      createAlunoDto.email,
+      createAlunoCommand.email,
     );
     if (alunoExistente) {
       throw new ConflictException(
         'Já existe um aluno cadastrado com esse email.',
       );
     }
+  }
 
-    const novoAluno = new Aluno(
-      createAlunoDto.nome,
-      createAlunoDto.endereco,
-      createAlunoDto.email,
-      createAlunoDto.telefone,
-    );
-
-    const alunoCadastrado = this.alunoRepository.criar(novoAluno);
-    return alunoCadastrado;
+  private validarIdadeMinima(createAlunoCommand: CreateAlunoCommand) {
+    const anoAtual = new Date().getFullYear();
+    const idade = anoAtual - createAlunoCommand.anoNascimento;
+    const IDADE_MIN_CADASTRO = 16;
+    if (idade <= IDADE_MIN_CADASTRO) {
+      throw new ForbiddenException('A idade mínima para cadastro é 16 anos.');
+    }
   }
 
   listar() {
