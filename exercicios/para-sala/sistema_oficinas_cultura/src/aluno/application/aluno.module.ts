@@ -12,7 +12,7 @@ export class AlunoModule {
   static comInfraestrutura(infrastructureModule: Type | DynamicModule) {
     return {
       module: AlunoModule,
-      imports: [infrastructureModule],
+      imports: [infrastructureModule], //Essa linha é onde ocorre a injeção do módulo de persistência.
     };
   }
 }
