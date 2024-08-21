@@ -4,7 +4,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { CreateAlunoCommand } from './commands/create-aluno-command';
-import { AlunoRepository } from '../aluno.repository';
+import { AlunoRepository } from './ports/aluno.repository';
 import { AlunoFactory } from '../domain/factories/aluno-factory';
 
 @Injectable()
@@ -25,8 +25,7 @@ export class AlunoService {
       createAlunoCommand.telefone,
     );
 
-    // const alunoCadastrado = this.alunoRepository.criar(novoAluno); // Vamos implementar essa camada mais adiante
-    return novoAluno;
+    return this.alunoRepository.salvar(novoAluno);
   }
 
   private validarSeJaExiste(createAlunoCommand: CreateAlunoCommand) {

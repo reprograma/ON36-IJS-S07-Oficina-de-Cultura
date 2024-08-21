@@ -27,8 +27,8 @@ describe('AlunoService', () => {
     expect(service).toBeDefined();
   });
 
-  it('deve retornar um aluno criado para o controller', () => {
-    const alunoCriado = service.cadastrar(alunoTest);
+  it('deve retornar um aluno criado para o controller', async () => {
+    const alunoCriado = await service.cadastrar(alunoTest);
     expect(alunoCriado).toBeInstanceOf(Aluno);
     expect(alunoCriado.id).toBeDefined();
     expect(alunoCriado.nome).toBe(alunoTest.nome);
