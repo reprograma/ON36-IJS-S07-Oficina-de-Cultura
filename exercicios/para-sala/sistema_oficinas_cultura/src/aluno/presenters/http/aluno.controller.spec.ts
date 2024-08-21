@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AlunoController } from './aluno.controller';
-import { AlunoService } from './application/aluno.service';
-import { AlunoRepository } from './aluno.repository';
+import { AlunoService } from '../../application/aluno.service';
 
 describe('AlunoController', () => {
   let controller: AlunoController;
@@ -9,7 +8,7 @@ describe('AlunoController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AlunoController],
-      providers: [AlunoService, AlunoRepository],
+      providers: [AlunoService],
     }).compile();
 
     controller = module.get<AlunoController>(AlunoController);

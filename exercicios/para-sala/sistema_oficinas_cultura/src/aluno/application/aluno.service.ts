@@ -3,15 +3,15 @@ import {
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { CreateAlunoDto } from '../dto/create-aluno.dto';
+// import { CreateAlunoDto } from '../dto/create-aluno.dto'; // Aqui temos uma dependência de uma camada externa a camada application
 import { AlunoRepository } from '../aluno.repository';
 import { Aluno } from '../entities/aluno.entity';
 
 @Injectable()
 export class AlunoService {
   constructor(private readonly alunoRepository: AlunoRepository) {}
-
-  cadastrar(createAlunoDto: CreateAlunoDto) {
+  // CreateAlunoDto - vamos trocar para any por enquanto até corrigirmos esse ponto
+  cadastrar(createAlunoDto: any) {
     // Pessoas a partir de 16 anos (professores e estudantes);
     const anoAtual = new Date().getFullYear();
     const idade = anoAtual - createAlunoDto.anoNascimento;

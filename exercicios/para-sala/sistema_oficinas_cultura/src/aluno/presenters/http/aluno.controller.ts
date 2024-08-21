@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { AlunoService } from './application/aluno.service';
 import { CreateAlunoDto } from './dto/create-aluno.dto';
+import { AlunoService } from '../../application/aluno.service';
 
 @Controller('alunos')
 export class AlunoController {
@@ -9,5 +9,10 @@ export class AlunoController {
   @Post()
   cadastrar(@Body() createAlunoDto: CreateAlunoDto) {
     return this.alunoService.cadastrar(createAlunoDto);
+  }
+
+  @Post()
+  listar() {
+    return this.alunoService.listar();
   }
 }

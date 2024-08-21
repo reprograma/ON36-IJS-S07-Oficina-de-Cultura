@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AlunoController } from '../aluno.controller';
+import { AlunoController } from '../presenters/http/aluno.controller';
 import { AlunoService } from './aluno.service';
 import { AlunoRepository } from '../aluno.repository';
 
