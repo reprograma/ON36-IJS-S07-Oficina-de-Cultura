@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AlunoService } from './aluno.service';
-// import { CreateAlunoDto } from '../dto/create-aluno.dto';
+import { CreateAlunoCommand } from './commands/create-aluno-command';
 import { ConflictException, ForbiddenException } from '@nestjs/common';
 import { Aluno } from '../entities/aluno.entity';
 import { AlunoRepository } from '../aluno.repository';
@@ -13,7 +13,7 @@ describe('AlunoService', () => {
     endereco: 'Rua 1',
     email: 'example@example.com',
     anoNascimento: 2000,
-  } as any; // CreateAlunoDto;
+  } as CreateAlunoCommand;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -42,7 +42,7 @@ describe('AlunoService', () => {
     const alunoTestMenor16 = {
       ...alunoTest,
       anoNascimento: new Date().getFullYear() - 16,
-    } as any; // CreateAlunoDto;
+    } as CreateAlunoCommand;
 
     expect(() => service.cadastrar(alunoTestMenor16)).toThrow(
       ForbiddenException,
