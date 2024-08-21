@@ -3,9 +3,9 @@ import {
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { CreateAlunoDto } from './dto/create-aluno.dto';
-import { AlunoRepository } from './aluno.repository';
-import { Aluno } from './entities/aluno.entity';
+import { CreateAlunoDto } from '../dto/create-aluno.dto';
+import { AlunoRepository } from '../aluno.repository';
+import { Aluno } from '../entities/aluno.entity';
 
 @Injectable()
 export class AlunoService {

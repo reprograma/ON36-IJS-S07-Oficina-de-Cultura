@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AlunoService } from './aluno.service';
-import { CreateAlunoDto } from './dto/create-aluno.dto';
+import { CreateAlunoDto } from '../dto/create-aluno.dto';
 import { ConflictException, ForbiddenException } from '@nestjs/common';
-import { Aluno } from './entities/aluno.entity';
-import { AlunoRepository } from './aluno.repository';
+import { Aluno } from '../entities/aluno.entity';
+import { AlunoRepository } from '../aluno.repository';
 
 describe('AlunoService', () => {
   let service: AlunoService;
